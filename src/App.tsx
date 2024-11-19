@@ -1,8 +1,6 @@
 import {
   Authenticated,
-  GitHubBanner,
   Refine,
-  WelcomePage,
 } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 
@@ -25,7 +23,6 @@ import { resources } from "./config/resources";
 function App() {
   return (
     <BrowserRouter>
-      <GitHubBanner />
       <AntdApp>
         <DevtoolsProvider>
           <Refine
