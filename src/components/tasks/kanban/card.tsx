@@ -9,6 +9,7 @@ import {
   EyeOutlined,
   MoreOutlined,
 } from "@ant-design/icons";
+import { useDelete, useNavigation } from "@refinedev/core";
 import {
   Button,
   Card,
@@ -37,7 +38,8 @@ type ProjectCardProps = {
 const ProjectCard = ({ id, title, dueDate, users }: ProjectCardProps) => {
   const { token } = theme.useToken();
 
-  const edit = () => {};
+  const { edit } = useNavigation();
+  const { mutate } = useDelete();
 
   const dropdownItems = useMemo(() => {
     const dropdownItems: MenuProps["items"] = [
@@ -45,14 +47,22 @@ const ProjectCard = ({ id, title, dueDate, users }: ProjectCardProps) => {
         label: "View Card",
         key: "1",
         icon: <EyeOutlined />,
-        onClick: () => edit(),
+        onClick: () => edit("tasks", id, "replace"),
       },
       {
         danger: true,
         label: "Delete card",
         key: "2",
         icon: <DeleteOutlined />,
-        onClick: () => [],
+        onClick: () => {
+          mutate({
+            resource: "tasks",
+            id,
+            meta: {
+              operation: "task",
+            },
+          });
+        },
       },
     ];
 
@@ -178,11 +188,11 @@ const ProjectCard = ({ id, title, dueDate, users }: ProjectCardProps) => {
 export default ProjectCard;
 
 export const ProjectCardMemo = memo(ProjectCard, (prev, next) => {
-    return (
-        prev.id === next.id &&
-        prev.title === next.title &&
-        prev.dueDate === next.dueDate &&
-        prev.users?.length === next.users?.length &&
-        prev.updatedAt === next.updatedAt
-    )
-})
+  return (
+    prev.id === next.id &&
+    prev.title === next.title &&
+    prev.dueDate === next.dueDate &&
+    prev.users?.length === next.users?.length &&
+    prev.updatedAt === next.updatedAt
+  );
+});

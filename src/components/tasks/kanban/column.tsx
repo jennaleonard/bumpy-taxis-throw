@@ -65,7 +65,7 @@ const KanbanColumn = ({
           flex: 1,
           overflowY: active ? "unset" : "auto",
           border: "2px dashed transparent",
-          borderColor: isOver ? "#00040" : "transparent",
+          borderColor: isOver ? "#000040" : "transparent",
           borderRadius: "4px",
         }}
       >
